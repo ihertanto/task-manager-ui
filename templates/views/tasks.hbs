@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {{>head_default}}
+    </head>
+    <body>
+        <div class="main-content">
+            {{>body_header}}
+            <p>Input New Task!</p>
+            <form method='post' action='/tasks'>
+                <table>
+                    <tr>
+                        <td>Description</td>
+                        <td><input name='description' placeholder='Description' required /> </td>
+                    </tr>
+                    <tr>
+                        <td>Completed Status</td>
+                        <td> <input type='checkbox' name='completed' placeholder="Completed" /></td>
+                    </tr>
+                </table>                
+               <br />
+                <input type='submit' value='Add New Task' />
+            </form>
+            <p>All Task:</p>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Description</th>
+                    <th>Completed Status</th>
+                    <th>Created</th>
+                    <th>Last Modified</th>
+                    <th></th>
+                </tr>            
+            {{#each tasks as |task _id|}}
+                <tr>
+                    <td>{{_id}}</td>
+                    <td>{{task.description}}</td>
+                    <td>{{task.completed}}</td>
+                    <td>{{task.createdAt}}</td>
+                    <td>{{task.updatedAt}}</td>
+                    <td>                        
+                        <form method='get' action='/tasks/edit/{{task._id}}'>
+                            <button>Edit</button>
+                        </form>
+                        <form method='get' action='/tasks/delete/{{task._id}}'>
+                            <button>Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {{/each}}
+            </table>
+        </div>
+        {{>body_footer}}
+    </body>
+</html>
